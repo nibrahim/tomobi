@@ -1,32 +1,54 @@
-<style>
+<style type="text/css">
 body {
-  min-width:357px;
-  overflow-x:hidden;
-}
+       width: 220px;
+       font-size: 8pt;
+       }
 
 img {
-  margin:5px;
-  border:2px solid black;
-  vertical-align:middle;
-  width:75px;
-  height:75px;
-}
+      border: 0px;
+      }
+
+h4 {
+     text-align: center;
+     font-variant: small-caps;
+     }
+
+h4.success { 
+             background-color: green;
+             }
+
+h4.failed { 
+            background-color: red;
+            }
 </style>
 
 <script type="text/javascript">
+loader = document.createElement("img");
+loader.src = "ajax-loader.gif"
+loader.id = "spinner"
+
 function done(r) {
+    var response = JSON.parse(this.response);
     var p = document.createElement("p");
-    p.innerHTML
+    if (response["status"] == "success") {
+	p.innerHTML = "<h4 class='success'>Conversion completed</h4><a href='file://"+response["file"]+"'>"+response["file"]+"</a>";
+    }
+    if (response["status"] == "failed") {
+	p.innerHTML = "<h4 class='failed'>Conversion failed</h4>";
+    }
+    document.body.removeChild(loader);
+    document.body.appendChild(p);
 }
 
 chrome.tabs.getSelected(null, function(tab) {
     var url = tab.url;
     var req = new XMLHttpRequest();
+    document.body.appendChild(loader);
     req.open("POST",
     	     "http://0.0.0.0:9090/",
     	     true);
     var params = "url="+url;
-    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     req.onload = done;
     req.send(params)
 });
