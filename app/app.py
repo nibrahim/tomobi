@@ -1,3 +1,9 @@
+# This file is part of the mobify application. 
+#
+# Copyright 2011 - Noufal Ibrahim <noufal@nibrahi.net.in>
+#
+# Licensed under the AGPL - http://www.gnu.org/licenses/agpl.html
+
 import datetime
 import json
 import os
