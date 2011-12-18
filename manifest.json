@@ -1,0 +1,14 @@
+{
+  "name": "Mobify",
+  "version": "0.1",
+  "description": "Coverts current page into .mobi file that can be read on a kindle",
+  "browser_action": {
+      "default_icon": "mobi.png",
+      "popup" : "popup.html"
+    
+  },
+  "permissions": [
+      "http://0.0.0.0:9090/",
+      "tabs"
+  ]
+}
