@@ -14,8 +14,9 @@ app = web.application(urls, globals())
 def convert_to_mobi(input_file, fname, save_dir = "/home/noufal/Downloads/kindle"):
     output_file = "%s/%s.mobi"%(save_dir, fname)
     cmd = ["/usr/bin/ebook-convert", input_file, output_file]
-    print cmd
-    ret = subprocess.call(cmd)
+    print "Ebook conversion command : " + " ".join(cmd)
+    with open("/dev/null", "w") as devnull:
+        ret = subprocess.call(cmd, stdout = devnull)
     if ret != 0:
         print "Calibre Coversion failed : %s"%input_file
         return False
@@ -26,7 +27,7 @@ def convert_to_mobi(input_file, fname, save_dir = "/home/noufal/Downloads/kindle
 def pandoc_covert_to_epub(url):
     epub = tempfile.mktemp(".epub")
     cmd = ["/usr/bin/pandoc", "-f", "html", "-t", "epub", "-o", epub, url]
-    print cmd
+    print "Pandoc command : " + " ".join(cmd)
     ret = subprocess.call(cmd)
     if ret == 0:
         return epub
@@ -37,7 +38,7 @@ def lynx_covert_to_text(url):
     output = tempfile.mktemp(".txt")
     cmd = ["/usr/bin/lynx", "-dump", "-nolist", url]
     op = open(output, "w")
-    print cmd
+    print "Lynx command : " + " ".join(cmd)
     p = subprocess.Popen(cmd, stdout = op)
     ret = p.wait()
     op.close()
@@ -57,8 +58,10 @@ def get_filename(url):
 class convert(object):
     def POST(self):
         i = web.input()
-        url = i["url"]
-        print "Coverting %s"%url
+        web.header("Content-type", "text/json")
+        url = i.get("url")
+        if not url:
+            return json.dumps(dict(status="bad url"))
         ip = pandoc_covert_to_epub(url) or lynx_covert_to_text(url)
         if not ip:
             print "Initial coversion failed : %s"%url
@@ -66,8 +69,10 @@ class convert(object):
             ret = convert_to_mobi(ip, get_filename(url))
             os.unlink(ip)
         if ret:
+            print "Completion completed. File placed at %s"%ret
             return json.dumps(dict(file = ret, status = "success"))
         else:
+            print "Conversion failed"
             return json.dumps(dict(status = "failed"))
 
             
