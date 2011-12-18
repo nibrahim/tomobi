@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 import subprocess
@@ -12,7 +13,10 @@ urls = (
 app = web.application(urls, globals())
 
 def convert_to_mobi(input_file, fname, save_dir = "/home/noufal/Downloads/kindle"):
-    output_file = "%s/%s.mobi"%(save_dir, fname)
+    directory = save_dir + datetime.datetime.now().strftime("/%Y/%m/%d/")
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    output_file = "%s/%s.mobi"%(directory, fname)
     cmd = ["/usr/bin/ebook-convert", input_file, output_file]
     print "Ebook conversion command : " + " ".join(cmd)
     with open("/dev/null", "w") as devnull:
