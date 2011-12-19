@@ -44,6 +44,13 @@ function done(r) {
     document.body.appendChild(p);
 }
 
+function error(r) {
+    var p = document.createElement("p");
+    p.innerHTML = "<h4 class='failed'>XHR failure</h4>Is the backend app running?"
+    document.body.removeChild(loader);
+    document.body.appendChild(p);
+}
+
 chrome.tabs.getSelected(null, function(tab) {
     var url = tab.url;
     var req = new XMLHttpRequest();
@@ -54,6 +61,7 @@ chrome.tabs.getSelected(null, function(tab) {
     var params = "url="+url;
     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     req.onload = done;
+    req.onerror = error;
     req.send(params)
 });
 
