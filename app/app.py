@@ -4,12 +4,15 @@
 #
 # Licensed under the AGPL - http://www.gnu.org/licenses/agpl.html
 
+import argparse
 import datetime
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import urlparse
+
 
 import web
         
@@ -23,7 +26,7 @@ def convert_to_mobi(input_file, fname, save_dir = "/home/noufal/Downloads/kindle
     if not os.path.exists(directory):
         os.makedirs(directory)
     output_file = "%s/%s.mobi"%(directory, fname)
-    cmd = ["/usr/bin/ebook-convert", input_file, output_file]
+    cmd = ["/usr/bin/ebook-convert", input_file, output_file, "--title='%s'"%fname]
     print "Ebook conversion command : " + " ".join(cmd)
     with open("/dev/null", "w") as devnull:
         ret = subprocess.call(cmd, stdout = devnull)
@@ -85,7 +88,9 @@ class convert(object):
             print "Conversion failed"
             return json.dumps(dict(status = "failed"))
 
-            
+
+    
+
 
 if __name__ == "__main__":
     app.run()
