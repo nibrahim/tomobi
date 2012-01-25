@@ -19,7 +19,7 @@ There is a chrome plugin (extension.crx) which you can install into your Chrome 
 
 There is also a "back end" server which you need to run to actually do the conversions. This is a python app that uses `web.py` so you need to install that inside a virtualenv and then start the server (refer Installation section below).
 
-The actual work of conversion is accomplished using [pandoc](https://github.com/jgm/pandoc), [lynx](http://lynx.isc.org/), [Calibre](http://calibre-ebook.com/) and so you need these three programs installed as well.
+The actual work of conversion is accomplished using [pandoc](https://github.com/jgm/pandoc), [lynx](http://lynx.isc.org/), [calibre](http://calibre-ebook.com/) and so you need these three programs installed as well. You'll also need [Gnu wget](http://www.gnu.org/software/wget/) to fetch the page before conversion. 
 
 Installation
 ------------
