@@ -26,9 +26,9 @@ Installation
 
 This whole thing is not tinker free and needs some time and tinkering to setup. Please fork the project and send it a pull request if you can improve it in any way. It currently "works for me". 
 
-1. Install `pandoc`, `lynx` and `calibre`. On Debian, you can do this using 
+1. Install `pandoc`, `lynx`, `calibre` and `wget`. On Debian, you can do this using 
 
-    sudo apt-get install pandoc lynx calibre
+    sudo apt-get install pandoc lynx calibre wget
 
 1. Install `python` using `apt-get install python`
 1. Install `virtualenv` using `apt-get install python-virtualenv`
