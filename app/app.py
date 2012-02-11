@@ -84,7 +84,7 @@ def fetch(url):
     null = open("/dev/null","w")
     p = subprocess.Popen(cmd, cwd = workarea)
     ret = p.wait()
-    filename = glob.glob("%s/*.html"%workarea) or glob.glob("%s/*.php"%workarea)
+    filename = glob.glob("%s/*.html"%workarea) or glob.glob("%s/*.php"%workarea) or glob.glob("%s/*.htm"%workarea)
     if not filename: # TODO: Raise exception here
         print "No parseable filename"
         return workarea, False
